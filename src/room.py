@@ -33,7 +33,7 @@ class Room:
         return self[direction]
 
     def get_description(self):
-        return self.description
+        return self.description.rstrip()
 
     def __contains__(self, item):
         for i in self.items:
@@ -49,10 +49,18 @@ class Room:
                 item_location = index
                 break
             # if(item.upper() == str(self.items[index]).upper()):
+        # print(f"tasty times tasty tastes {self.items.index(item)}")
+        self.items[0].on_take()
         print(f"items before: {self.items}")
+        print(item_location)
         self.items = self.items[0:item_location] + \
             self.items[item_location+1:]
         print(f"items after: {self.items}")
 
     def add_item(self, item: str):
+        item = Item(item)
         self.items.append(item)
+        item.on_drop()
+
+    def __eq__(self, value):
+        return self.name == value

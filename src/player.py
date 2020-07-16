@@ -1,4 +1,5 @@
 from utils.utils import mapFormatter, three_args_center
+from item import Item
 
 
 class Player:
@@ -19,8 +20,8 @@ class Player:
         {mapFormatter("|")}\n
         {mapFormatter("|")}\n
         {mapFormatter(str(room.s))}\n
-        \033[1;32;40m Other info: \033[0m
-        \033[1;32;40m Items: \033[0m {', '.join([str(item) for item in room.items])}\n'''
+        \033[1;32;40mOther info:\033[0m
+        \033[1;32;40mItems in room:\033[0m {', '.join([str(item) for item in room.items])}\n'''
 
     def get_room(self):
         return self.current_room
@@ -33,16 +34,14 @@ class Player:
 
     def get_item(self, item: str):
         if(item in self.current_room):
+            item = Item(item)
             self.inventory += [item]
-            print(self.current_room.items)
             self.current_room.remove_item(item)
-            print(self.current_room.items)
 
     def get_inventory(self):
         return self.inventory
 
     def drop_item(self, item: str):
         if(item in self.inventory):
-            print("We found it boss")
             self.current_room.add_item(item)
             self.inventory.remove(item)

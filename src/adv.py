@@ -24,7 +24,7 @@ def main():
         'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
     chamber! Sadly, it has already been completely emptied by
     earlier adventurers. The only exit is to the south.""", ["Thank-You-Note"]),
-        'Amazon Returns Center': Room("Amazon Returns Center", """\033[1;31;40mYou are greeted by the legendary Jeff Bezos, who serves you lawsuit papers the moment you enter the building.\n\tYou Win!\033[0m""", ["Lawsuit Forms"]),
+        'Amazon Returns Center': Room("Amazon Returns Center", """\033[1;31;40mYou are greeted by the legendary Jeff Bezos,\nwho serves you lawsuit papers the moment you enter the building.\033[0m""", ["Lawsuit Forms"]),
     }
 
     # Link rooms together
@@ -65,11 +65,12 @@ def main():
     while True:
         room = player.get_room()
         print(f"{player}\n\n")
-        print(room.get_description() + "\n")
+        print(room.get_description())
+        print()
 
         print("-"*screen_width + "\n")
         user_input = input(
-            "Where do you want to go?\n\n\tYou can Travel to the 'n' (North), 's' (South), 'e' (East) and 'w' (West)\n\tYou can also check your inventory by typing 'inventory' or 'i'\n\n\033[1;34;43m Type your response here:\033[0m ").split(' ')
+            "Where do you want to go?\n\n\tYou can Travel to the 'n' (North), 's' (South), 'e' (East) and 'w' (West)\n\tYou can also check your inventory by typing 'inventory' or 'i'\n\n\033[1;34;43mType your response here:\033[0m").split(' ')
         if (len(user_input) < 1 or (not len(user_input) == 1 and 'get' not in user_input and 'drop' not in user_input and 'use' not in user_input)):
             # put an angry demeaning note here
             print("you need to try harder than that.")
@@ -91,7 +92,8 @@ def main():
 
             if user_input == 'i' or user_input == 'inventory':
                 # Inventoryyyy
-                print(f"Your inventory: {player.get_inventory()}")
+                print(
+                    f"Your inventory: {player.get_inventory() if (len(player.get_inventory()) > 0) else 'Empty'}")
                 input("Press Enter to continue...")
 
                 continue
@@ -112,20 +114,27 @@ def main():
         if 'use' in user_input:
             curr_room = player.get_room()
             item_being_used = " ".join(user_input[1:])
-            print(f"the room isisisisisisisis {curr_room}")
             if(item_being_used in player.get_inventory()):
-                if(curr_room=="Amazon Returns Center"):
+                if(curr_room == "Amazon Returns Center"):
                     if(item_being_used == "Amazon Basics Longsword"):
-                        print("uh.")
+                        print(
+                            "\nYou hand off the Longsword to sir Jeff. He accepts your return and grants you mercy.\n")
+                        input("Press Enter to continue...")
                         continue
                     else:
-                        print(f"Jeff looks at your {item_being_used} with sheer disdain. Thou art judged.")
+                        print(
+                            f"Jeff looks at your {item_being_used} with sheer disdain. Thou art judged.")
+                        input("Press Enter to continue...")
+                        continue
                 else:
-                    print(f"That item: {item_being_used} doesn't work here yet")
-                
+                    print(
+                        f"You inspect the {item_being_used}. It looks like it's in good condition.")
+                    input("Press Enter to continue...")
+                    continue
 
             else:
-                print("you don't have that item.")
+                print(f"you don't have that item: {item_being_used}")
+
 
 if __name__ == "__main__":
     main()
