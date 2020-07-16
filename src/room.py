@@ -40,6 +40,19 @@ class Room:
             if str(i) == item:
                 return True
 
-    # def remove_item(self, item):
-    #     item_location = 0
-    #     for index in range(len(self.items)):
+    def remove_item(self, item: str):
+
+        for index in range(len(self.items)):
+            print(f"currently in index {index}")
+
+            if str(self.items[index]) == item:
+                item_location = index
+                break
+            # if(item.upper() == str(self.items[index]).upper()):
+        print(f"items before: {self.items}")
+        self.items = self.items[0:item_location] + \
+            self.items[item_location+1:]
+        print(f"items after: {self.items}")
+
+    def add_item(self, item: str):
+        self.items.append(item)
