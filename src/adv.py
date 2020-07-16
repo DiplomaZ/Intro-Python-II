@@ -36,7 +36,7 @@ def main():
     room['narrow'].assign_room('s', room['treasure'])
     room['treasure'].assign_room('s', room['Amazon Returns Center'])
 
-    valid_choices = list('newsqi') + ['inventory']
+    valid_choices = list('newsqi') + ['inventory'] + ['use']
     # room['narrow'].n_to = room['treasure']
     # room['treasure'].s_to = room['narrow']
 
@@ -69,8 +69,8 @@ def main():
 
         print("-"*screen_width + "\n")
         user_input = input(
-            "Where do you want to go?\n\n\tYou can Travel to the 'n' (North), 's' (South), 'e' (East) and 'w' (West)\n\tYou can also check your inventory by typing 'inventory' or 'i'\n\n\033[1;37;43m Type your response here:\033[0m ").split(' ')
-        if (len(user_input) < 1 or (not len(user_input) == 1 and 'get' not in user_input and 'drop' not in user_input)):
+            "Where do you want to go?\n\n\tYou can Travel to the 'n' (North), 's' (South), 'e' (East) and 'w' (West)\n\tYou can also check your inventory by typing 'inventory' or 'i'\n\n\033[1;34;43m Type your response here:\033[0m ").split(' ')
+        if (len(user_input) < 1 or (not len(user_input) == 1 and 'get' not in user_input and 'drop' not in user_input and 'use' not in user_input)):
             # put an angry demeaning note here
             print("you need to try harder than that.")
             continue
@@ -102,15 +102,30 @@ def main():
                 print("wrooooooooooooooooooooooooooong")
         if 'get' in user_input:
 
-            things = user_input
-            print(" ".join(things[1:]))
-            player.get_item(" ".join(things[1:]))
+            print(" ".join(user_input[1:]))
+            player.get_item(" ".join(user_input[1:]))
 
         if 'drop' in user_input:
-            things = user_input
-            print(" ".join(things[1:]))
-            player.drop_item(" ".join(things[1:]))
+            print(" ".join(user_input[1:]))
+            player.drop_item(" ".join(user_input[1:]))
 
+        if 'use' in user_input:
+            curr_room = player.get_room()
+            item_being_used = " ".join(user_input[1:])
+            print(f"the room isisisisisisisis {curr_room}")
+            if(item_being_used in player.get_inventory()):
+                if(curr_room=="Amazon Returns Center"):
+                    if(item_being_used == "Amazon Basics Longsword"):
+                        print("uh.")
+                        continue
+                    else:
+                        print(f"Jeff looks at your {item_being_used} with sheer disdain. Thou art judged.")
+                else:
+                    print(f"That item: {item_being_used} doesn't work here yet")
+                
+
+            else:
+                print("you don't have that item.")
 
 if __name__ == "__main__":
     main()
