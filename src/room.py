@@ -41,21 +41,18 @@ class Room:
                 return True
 
     def remove_item(self, item: str):
+        item_location = 0
 
         for index in range(len(self.items)):
-            print(f"currently in index {index}")
-
-            if str(self.items[index]) == item:
+            if str(self.items[index].get_name()) == item:
                 item_location = index
                 break
             # if(item.upper() == str(self.items[index]).upper()):
         # print(f"tasty times tasty tastes {self.items.index(item)}")
-        self.items[0].on_take()
-        print(f"items before: {self.items}")
-        print(item_location)
+        # self.items[0].on_take()
+
         self.items = self.items[0:item_location] + \
             self.items[item_location+1:]
-        print(f"items after: {self.items}")
 
     def add_item(self, item: str):
         item = Item(item)

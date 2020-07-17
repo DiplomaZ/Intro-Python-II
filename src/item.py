@@ -7,10 +7,17 @@ class Item:
         return self.__name
 
     def __repr__(self):
-        return f"Item({self.__name})"
+        return f"{self.__name}"
+
+    @property
+    def name(self):
+        return self.__name
 
     def on_take(self):
         print(f'You have picked up {self.__name}')
 
     def on_drop(self):
         print(f'You have dropped {self.__name}')
+
+    def get_name(self):
+        return f"{self.__name}"

@@ -104,17 +104,15 @@ def main():
                 print("wrooooooooooooooooooooooooooong")
         if 'get' in user_input:
 
-            print(" ".join(user_input[1:]))
             player.get_item(" ".join(user_input[1:]))
 
         if 'drop' in user_input:
-            print(" ".join(user_input[1:]))
             player.drop_item(" ".join(user_input[1:]))
 
         if 'use' in user_input:
             curr_room = player.get_room()
             item_being_used = " ".join(user_input[1:])
-            if(item_being_used in player.get_inventory()):
+            if(item_being_used in player):
                 if(curr_room == "Amazon Returns Center"):
                     if(item_being_used == "Amazon Basics Longsword"):
                         print(

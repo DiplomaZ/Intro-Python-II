@@ -23,6 +23,11 @@ class Player:
         \033[1;32;40mOther info:\033[0m
         \033[1;32;40mItems in room:\033[0m {', '.join([str(item) for item in room.items])}\n'''
 
+    def __contains__(self, item):
+        for i in self.inventory:
+            if str(i) == item:
+                return True
+
     def get_room(self):
         return self.current_room
 
@@ -34,14 +39,32 @@ class Player:
 
     def get_item(self, item: str):
         if(item in self.current_room):
-            item = Item(item)
-            self.inventory += [item]
             self.current_room.remove_item(item)
+
+            item = Item(item)
+            item.on_take()
+            self.inventory += [item]
 
     def get_inventory(self):
         return self.inventory
 
     def drop_item(self, item: str):
-        if(item in self.inventory):
-            self.current_room.add_item(item)
-            self.inventory.remove(item)
+        # if(item in self):
+        #     self.current_room.add_item(item)
+
+        #     item = Item(item)
+        #     item.on_drop()
+        #     self.inventory.remove(item)
+        item_location = 0
+
+        for index in range(len(self.inventory)):
+            if str(self.inventory[index].get_name()) == item:
+                item_location = index
+                break
+                # if(item.upper() == str(self.inventory[index]).upper()):
+            # print(f"tasty times tasty tastes {self.inventory.index(item)}")
+            # self.inventory[0].on_take()
+
+        self.inventory = self.inventory[0:item_location] + \
+            self.inventory[item_location+1:]
+        self.current_room.add_item(item)
